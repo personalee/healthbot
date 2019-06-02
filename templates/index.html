@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="assets/css/Side-Swipe-Menu-1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/SBWP-Search-Bar-With-Parameters.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Search-Field-With-Icon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Side-Swipe-Menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Table-with-search-1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Table-with-search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+
+</head>
+
+<body>
+    <h1 class="display-1 text-info bounce animated">Login</h1>
+    <div class="signupblock">
+        <h6>or</h6>
+        <h6> <a href="signup">Hi, are you a new user ?</a></h6>
+    </div>
+    <form action="signup">
+        <div class="row">
+            <div class="col">
+                <aside></aside>
+            </div>
+            <div class="col"><input class="border rounded-0 border-secondary shadow-sm" type="text"
+                    placeholder="Username" id="username" autofocus="" style="width: 300px;height: 40px;"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <aside></aside>
+            </div>
+            <div class="col" style="margin-top: 20px;"><input class="border rounded-0 border-secondary shadow-sm"
+                    type="password" placeholder="password" style="width: 300px;height: 40px;" id="password"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"><Button class="btn btn-info active btn-lg shadow-sm" type="button"
+                    style="margin-top: 30px;" id="login">Login</Button></div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $('#login').click(
+            function () {
+                console.log($('#username').val());
+                console.log($('#password').val());
+// ajax call
+                $.ajax({
+                    data: {
+                        username: $('#username').val(),
+                        password: $('#password').val()
+                    },
+                    type: 'POST',
+                    url: '/getcredentials'
+                })
+                    .done(function (data) {
+
+                        if (data.error) {
+                            $('#errorAlert').text(data.error).show();
+                            $('#successAlert').hide();
+                        }
+                        else {
+                            $('#successAlert').text(data.name).show();
+                            $('#errorAlert').hide();
+                        }
+                        window.location.href ='/application'
+                    });
+
+                event.preventDefault();
+            }
+
+        );
+    </script>
+
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/SBWP-Search-Bar-With-Parameters.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/Side-Swipe-Menu-1.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/Side-Swipe-Menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/Table-with-search.js') }}"></script>
+</body>
+
+</html>

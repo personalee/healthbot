@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="assets/css/chatbox.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/chatbox.css') }}">
+    
+
+</head>
+
+
+<body style="background: snow">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Health Bot</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </a>
+
+                    <!--Menu items-->
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="chatbox">Chat bot</a>
+                        <a class="dropdown-item" id="doctors">Doctors</a>
+                        <a class="dropdown-item" id="reminders">Reminders</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!--chatbox-->
+    <div id="chatbox_div">
+        <div
+            style="margin-left: 500px;height: 400px;width: 590px;margin-top: 50px;margin-bottom: 20px;border-radius: 20px">
+            <iframe allow="microphone;" width="350" height="430" style="border: transparent"
+                src="https://console.dialogflow.com/api-client/demo/embedded/5df9efcc-ed4a-48a9-bd60-5c7d027ab6e9">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- cards -->
+    <br><br>
+    <div style="margin-top: 30px;margin-left: 20px;margin-right: 20px" id="card_div">
+        <div class="row">
+            {% for i in data['doctors'] %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" id="doctorname"> {{ i[0] }} </h5>
+                        <h5 class="card-title" id=""> {{ i[1] }} </h5>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Book appoinment
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Book appoinment</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <h5>selec date</h5>
+                                            <input type="date" name="" id="dateselect" style="border: transparent">
+                                            <h5>selec time</h5>
+                                            <input type="time" name="" id="timeselect" style="border: transparent">
+                                        </form>
+                                        <!-- payment-->
+                                        <div class="container">
+                                            <div>
+                                                <div >
+                                                    <div>
+                                                        <div>
+                                                            <h3 class="panel-title">
+                                                                Payment Gateway
+                                                            </h3>
+                                                            <div>
+                                                                <label>
+                                                                    <input type="checkbox" />
+                                                                    Remember
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <form role="form">
+                                                                <div class="form-group">
+                                                                    <label for="cardNumber">
+                                                                        CARD NUMBER</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                            id="cardNumber"
+                                                                            placeholder="Valid Card Number" required
+                                                                            autofocus />
+                                                                        <span class="input-group-addon"><span
+                                                                                class="glyphicon glyphicon-lock"></span></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div >
+                                                                        <div class="form-group">
+                                                                            <label for="expityMonth">
+                                                                                EXPIRY DATE</label>
+                                                                            <div>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="expityMonth" placeholder="MM"
+                                                                                    required />
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="expityYear" placeholder="YY"
+                                                                                    required /></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="form-group">
+                                                                            <label for="cvCode">
+                                                                                CV CODE</label>
+                                                                            <input type="password" class="form-control"
+                                                                                id="cvCode" placeholder="CV" required />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>                        
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="button" data-dismiss="modal" class="btn btn-primary"
+                                            id="bookdate">Book Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--remainders-->
+    <div style="margin-left: 20px;margin-right: 20px;margin-top: 20px" id="remainders_div">
+        {% for i in data['remainders'] %}
+        <div class="alert alert-warning" role="alert">
+            <p>{{ i[0] }}</p>
+            <p>{{ i[1] }}</p>
+            <p>{{ i[2] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <h1 id="welcome" style="margin-left: 50px">
+        Welcome to health chatbot application <small>click on menu</small>
+    </h1>
+    <!-- footer-->
+    <footer class="footer" style="height: 50px;">
+        <h6 style="margin-top: 20px;margin-left: 50px">made with &hearts; from pizzaboy &copy;</h6>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#remainders_div').hide()
+            $('#card_div').hide()
+            $('#chatbox_div').hide()
+
+            var min = 0;
+            var max = 42;
+            var tips = [
+                            "1. Exercise: Learn to do stretching exercises when you wake up. It boosts circulation and digestion, and eases back pain.",
+                            "2. Don’t skip breakfast. Studies show that eating a proper breakfast is one of the most positive things you can do if you are trying to lose weight. Breakfast skippers tend to gain weight. A balanced breakfast includes fresh fruit or fruit juice, a high-fibre breakfast cereal, low-fat milk or yoghurt, wholewheat toast, and a boiled egg.",
+                            "3. Hygiene. Many people don't know how to brush their teeth properly. Improper brushing can cause as much damage to the teeth and gums as not brushing at all. Lots of people don’t brush for long enough, don’t floss and don’t see a dentist regularly. Hold your toothbrush in the same way that would hold a pencil, and brush for at least two minutes.This includes brushing the teeth, the junction of the teeth and gums, the tongue and the roof of the mouth. And you don't need a fancy, angled toothbrush – just a sturdy, soft-bristled one that you replace each month.",
+                            "4. Neurobics for your mind. Get your brain fizzing with energy. American researchers coined the term ‘neurobics’ for tasks which activate the brain's own biochemical pathways and to bring new pathways online that can help to strengthen or preserve brain circuits. Brush your teeth with your ‘other’ hand, take a new route to work or choose your clothes based on sense of touch rather than sight. People with mental agility tend to have lower rates of Alzheimer's disease and age-related mental decline.",
+                            "5. Get what you give! Always giving and never taking? This is the short road to compassion fatigue. Give to yourself and receive from others, otherwise you’ll get to a point where you have nothing left to give. And hey, if you can’t receive from others, how can you expect them to receive from you?",
+                            "6. Get spiritual. A study conducted by the formidably sober and scientific Harvard University found that patients who were prayed for recovered quicker than those who weren’t, even if they weren’t aware of the prayer.",
+                            "7. Eat raw. Garlic, onions, spring onions and leeks all contain stuff that’s good for you. A study at the Child’s Health Institute in Cape Town found that eating raw garlic helped fight serious childhood infections. Heat destroys these properties, so eat yours raw, wash it down with fruit juice or, if you’re a sissy, have it in tablet form.",
+                            "8. Knock one back. A glass of red wine a day is good for you. A number of studies have found this, but a recent one found that the polyphenols (a type of antioxidant) in green tea, red wine and olives may also help protect you against breast cancer. It’s thought that the antioxidants help protect you from environmental carcinogens such as passive tobacco smoke.",
+                            "9. Bone up daily. Get your daily calcium by popping a tab, chugging milk or eating yoghurt. It’ll keep your bones strong. Remember that your bone density declines after the age of 30. You need at least 200 milligrams daily, which you should combine with magnesium, or it simply won’t be absorbed.",
+                            "10. Berries for your belly. Blueberries, strawberries and raspberries contain plant nutrients known as anthocyanidins, which are powerful antioxidants. Blueberries rival grapes in concentrations of resveratrol – the antioxidant compound found in red wine that has assumed near mythological proportions. Resveratrol is believed to help protect against heart disease and cancer.",
+                            "11. Curry favour. Hot, spicy foods containing chillies or cayenne pepper trigger endorphins, the feel-good hormones. Endorphins have a powerful, almost narcotic, effect and make you feel good after exercising. But go easy on the lamb, pork and mutton and the high-fat, creamy dishes served in many Indian restaurants.",
+                            "12. Cut out herbs: Some herbal supplements – from the popular St John's Wort and ginkgo biloba to garlic, ginger, ginseng and feverfew – can cause increased bleeding during surgery, warn surgeons. It may be wise to stop taking all medication, including herbal supplements, at least two weeks before surgery, and inform your surgeon about your herbal use.",
+                            "13. Eat tomato. Tomato is a superstar in the fruit and veggie pantheon. Tomatoes contain lycopene, a powerful cancer fighter. They’re also rich in vitamin C. The good news is that cooked tomatoes are also nutritious, so use them in pasta, soups and casseroles, as well as in salads.The British Thoracic Society says that tomatoes and apples can reduce your risk of asthma and chronic lung diseases. Both contain the antioxidant quercetin. To enjoy the benefits, eat five apples a week or a tomato every other day.",
+                            "14. Eat your stress away. Prevent low blood sugar as it stresses you out. Eat regular and small healthy meals and keep fruit and veggies handy. Herbal teas will also soothe your frazzled nerves. Eating unrefined carbohydrates, nuts and bananas boosts the formation of serotonin, another feel-good drug. Small amounts of protein containing the amino acid tryptamine can give you a boost when stress tires you out.",
+                            "15. Load up on vitamin C.We need at least 90 mg of vitamin C per day and the best way to get this is by eating at least five servings of fresh fruit and vegetables every day. So hit the oranges and guavas!",
+                            "16. No folly in folic acid. Folic acid should be taken regularly by all pregnant mums and people with a low immunity to disease. Folic acid prevents spina bifida in unborn babies and can play a role in cancer prevention. It is found in green leafy vegetables, liver, fruit and bran.",
+                            "17. A for Away. This vitamin, and beta carotene, help to boost immunity against disease. It also assists in the healing process of diseases such as measles and is recommended by the WHO. Good natural sources of vitamin A are kidneys, liver, dairy products, green and yellow vegetables, pawpaw, mangoes, chilli pepper, red sorrel and red palm oil.",
+                            "18. Pure water. Don’t have soft drinks or energy drinks while you're exercising. Stay properly hydrated by drinking enough water during your workout (just don't overdo things, as drinking too much water can also be dangerous).While you might need energy drinks for long-distance running, in shorter exercise sessions in the gym, your body will burn the glucose from the soft drink first, before starting to burn body fat. Same goes for eating sweets.",
+                            "19. GI, Jane. Carbohydrates with a high glycaemic index, such as bread, sugar, honey and grain-based food will give instant energy and accelerate your metabolism. If you’re trying to burn fat, stick to beans, rice, pasta, lentils, peas, soya beans and oat bran, all of which have a low GI count.",
+                            "20. Mindful living. You've probably heard the old adage that life's too short to stuff a mushroom. But perhaps you should consider the opposite: that life's simply too short NOT to focus on the simple tasks. By slowing down and concentrating on basic things, you'll clear your mind of everything that worries you.Really concentrate on sensations and experiences again: observe the rough texture of a strawberry's skin as you touch it, and taste the sweet-sour juice as you bite into the fruit; when your partner strokes your hand, pay careful attention to the sensation on your skin; and learn to really focus on simple tasks while doing them, whether it's flowering plants or ironing your clothes.",
+                            "21. The secret of stretching. When you stretch, ease your body into position until you feel the stretch and hold it for about 25 seconds. Breathe deeply to help your body move oxygen-rich blood to those sore muscles. Don't bounce or force yourself into an uncomfortable position.",
+                            "22. Do your weights workout first. Experts say weight training should be done first, because it's a higher intensity exercise compared to cardio. Your body is better able to handle weight training early in the workout because you're fresh and you have the energy you need to work it. Conversely, cardiovascular exercise should be the last thing you do at the gym, because it helps your body recover by increasing blood flow to the muscles, and flushing out lactic acid, which builds up in the muscles while you're weight training. It’s the lactic acid that makes your muscles feel stiff and sore.",
+                            "23. Burn fat during intervals. To improve your fitness quickly and lose weight, harness the joys of interval training. Set the treadmill or step machine on the interval programme, where your speed and workload varies from minute to minute. Build up gradually, every minute and return to the starting speed. Repeat this routine. Not only will it be less monotonous, but you can train for a shorter time and achieve greater results.",
+                            "24. Your dirtiest foot forward. If your ankles, knees, and hips ache from running on pavement, head for the dirt. Soft trails or graded roads are a lot easier on your joints than the hard stuff. Also, dirt surfaces tend to be uneven, forcing you to slow down a bit and focus on where to put your feet – great for agility and concentration.",
+                            "25. Burn the boredom, blast the lard. Rev up your metabolism by alternating your speed and intensity during aerobic workouts. Not only should you alternate your routine to prevent burnout or boredom, but to give your body a jolt. If you normally walk at 6.5km/h on the treadmill or take 15 minutes to walk a km, up the pace by going at 8km/h for a minute or so during your workout. Do this every five minutes or so. Each time you work out, increase your bouts of speed in small increments.",
+                            "27. ‘Okay, now do 100 of those’. Instead of flailing away at gym, enlist the help – even temporarily – of a personal trainer. Make sure you learn to breathe properly and to do the exercises the right way. You’ll get more of a workout while spending less time at the gym.",
+                            "28. Stop fuming. Don’t smoke and if you smoke already, do everything in your power to quit. Don’t buy into that my-granny-smoked-and-lived-to-be-90 crud – not even the tobacco giants believe it. Apart from the well-known risks of heart disease and cancer, orthopaedic surgeons have found that smoking accelerates bone density loss and constricts blood flow. So you could live to be a 90-year-old amputee who smells of stale tobacco smoke. Unsexy.",
+                            "30. Do self-checks. Do regular self-examinations of your breasts. Most partners are more than happy to help, not just because breast cancer is the most common cancer among SA women. The best time to examine your breasts is in the week after your period.",
+                            "32. Understand hormones. Recent research suggests that short-term (less than five years) use of HRT is not associated with an increase in the risk of breast cancer, but that using it for more than ten years might be. Breast cancer is detected earlier in women using HRT, as they are more alert to the disease than other women.",
+                            "32. Beat the sneezes. There are more than 240 allergens, some rare and others very common. If you’re a sneezer due to pollen: close your car’s windows while driving, rather switch on the internal fan (drawing in air from the outside), and avoid being outdoors between 5am and 10 am when pollen counts are at their highest; stick to holidays in areas with low pollen counts, such as the seaside and stay away from freshly cut grass.",
+                            "34. Asthma-friendly sports. Swimming is the most asthma-friendly sport of all, but cycling, canoeing, fishing, sailing and walking are also good, according to the experts. Asthma need not hinder peak performance in sport. 1% of the US Olympic team were asthmatics – and between them they won 41 medals.",
+                            "35. Deep heat. Sun rays can burn even through thick glass, and under water. Up to 35% of UVB rays and 85% of UVA rays penetrate thick glass, while 50% of UVB rays and 75% of UVA rays penetrate a meter of water and wet cotton clothing.Which means you’ll need sunscreen while driving your car on holiday, and water resistant block if you’re swimming.",
+                            "36. Fragrant ageing. Stay away from perfumed or flavoured suntan lotions which smell of coconut oil or orange if you want your skin to stay young. These lotions contain psoralen, which speeds up the ageing process. Rather use a fake-tan lotion. Avoid sun beds, which are as bad as the sun itself.",
+                            "37. Sunscreen can be a smokescreen. Sunscreen is unlikely to stop you from being sunburned, or to reduce your risk of developing skin cancer. That’s because most people don’t apply it properly, and stay in the sun too long.The solution? Slather on sunscreen daily and reapply it often, especially if you’ve been in the water. How much? At least enough to fill a shot glass.",
+                            "38. Laugh and cry. Having a good sob is reputed to be good for you. So is laughter, which has been shown to help heal bodies, as well as broken hearts. Studies in Japan indicate that laughter boosts the immune system and helps the body shake off allergic reactions.",
+                            "39. It ain’t over till it’s over. End relationships that no longer work for you, as you could be spending time in a dead end. Rather head for more meaningful things. You could be missing opportunities while you’re stuck in a meaningless rut, trying to breathe life into something that is long gone.",
+                            "40. Strong people go for help. Ask for assistance. Gnashing your teeth in the dark will not get you extra brownie points. It is a sign of strength to ask for assistance and people will respect you for it. If there is a relationship problem, the one who refuses to go for help is usually the one with whom the problem lies to begin with.",
+                            "42. Here’s the rub. Improve your circulation and help your lymph glands to drain by the way you towel off. Helping your lymph glands function can help prevent them becoming infected.When drying off your limbs and torso, brush towards the groin on your legs and towards the armpits on your upper body. You can do the same during gentle massage with your partner.",
+                            "43. Sugar-coated. More than three million South Africans suffer from type 2 diabetes, and the incidence is increasing – with new patients getting younger. New studies show this type of diabetes is often part of a metabolic syndrome (X Syndrome), which includes high blood pressure and other risk factors for heart disease.More than 80% of type 2 diabetics die of heart disease, so make sure you control your glucose levels, and watch your blood pressure and cholesterol counts."
+            ];
+            // and the formula is:
+            var random = Math.floor(Math.random() * (max - min + 1)) + min;
+            console.log(random);
+            Push.Permission.request();
+            Push.create("Today's Medical Tip", {
+                body: tips[random],
+                icon: 'icon.png',
+                timeout: 8000,               // Timeout before notification closes automatically.
+                vibrate: [100, 100, 100],    // An array of vibration pulses for mobile devices.
+                onClick: function () {
+                    // Callback for when the notification is clicked. 
+                    console.log(this);
+                }
+            });
+        });
+
+        $('#chatbox').click(function () {
+            console.log("works");
+            $('#card_div').hide()
+            $('#chatbox_div').show()
+            $('#remainders_div').hide()
+            $('#welcome').hide()
+        });
+
+        $('#doctors').click(function () {
+            console.log("works");
+            $('#chatbox_div').hide()
+            $('#card_div').show()
+            $('#remainders_div').hide()
+            $('#welcome').hide()
+        });
+
+        $('#reminders').click(function () {
+            console.log("works");
+            $('#chatbox_div').hide()
+            $('#remainders_div').show()
+            $('#card_div').hide()
+            $('#welcome').hide()
+        });
+
+        $('#bookdate').click(function () {
+            console.log($('#dateselect').val());
+            console.log($('#timeselect').val());
+            console.log($('#doctorname').val());
+
+            $.ajax({
+                data: {
+                    dateselect: $('#dateselect').val(),
+                    timeselect: $('#timeselect').val(),
+                },
+                type: 'POST',
+                url: '/remainders'
+            })
+                .done(function (data) {
+
+                    if (data.error) {
+                        $('#errorAlert').text(data.error).show();
+                        $('#successAlert').hide();
+                    }
+                    else {
+                        $('#successAlert').text(data.name).show();
+                        $('#errorAlert').hide();
+                    }
+                });
+
+            event.preventDefault();
+        });
+
+    </script>
+
+
+    <script src="assets/js/chatbox.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/chatbox.js') }}"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
